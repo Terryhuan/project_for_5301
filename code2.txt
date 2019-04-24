@@ -1,0 +1,73 @@
+ deleteall;
+        ####################################################
+        # Ring resonator
+        # A structure group that includes two offset parallel waveguides
+        # and a ring in between.
+        #
+        # Input properties
+        # Lc: coupling length
+        # gap: space between the coupling section of the ring and the waveguide
+        # radius: radius of ring
+        # index: refractive index
+        # material
+        # x span: length of the straight sections
+        # wg width:  width of the waveguides
+        # z span: height of waveguides
+        #
+        # Tags: integrated optics waveguide ring resonator ridge
+        #
+        # Copyright 2012 Lumerical Solutions Inc
+        #####################################################
+
+        # simplify variable names by removing spaces
+        x_span = %x span%;
+        z_span = %z span%;
+        wg_width = %wg width%;
+
+        addrect;
+        set("x",0);
+        set("x span",x_span);
+        set("y",2*radius+gap+r_r_gap/2+(3/2)*wg_width);
+        set("y span",wg_width);
+
+        copy;
+        set("y",-(2*radius+gap+r_r_gap/2+(3/2)*wg_width));
+
+        copy;
+        set("y",2*radius+wg_width/2+r_r_gap/2);
+        set("x span",Lc);
+
+        copy;
+        set("y",r_r_gap/2);
+
+        copy;
+        set("y",-(2*radius+wg_width/2+r_r_gap/2));
+
+        copy;
+        set("y",-r_r_gap/2);
+
+        addring;
+        set("theta start",-90);
+        set("theta stop",90);
+        set("inner radius",radius-wg_width/2);
+        set("outer radius",radius+wg_width/2);
+        set("x",Lc/2);
+        set("y",radius+r_r_gap/2+wg_width/2);
+
+        copy;
+        set("y",-(radius+r_r_gap/2+wg_width/2));
+
+        copy;
+        set("theta start",90);
+        set("theta stop",270);
+        set("x",-Lc/2);
+
+        copy;
+        set("y",radius+r_r_gap/2+wg_width/2);
+
+        selectall;
+        set("material",material);
+        if(material=="<Object defined dielectric>") {
+          set("index",index);
+        }
+        set("z span",z_span);

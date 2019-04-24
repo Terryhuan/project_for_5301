@@ -1,0 +1,57 @@
+ deleteall;
+        addrect;   #the upper(first) planar waveguide
+        set("x",0);
+        set("x span",lx);
+        set("y span",base_width);
+        set("y",2*radius+gap+(3/2)*base_width+r_r_gap/2);
+
+        copy;      #the lower(second) planar waveguide
+        set("y",-(2*radius+gap+(3/2)*base_width+r_r_gap/2));
+
+        copy;      #the upper coupling length for the first ring
+        set("y",2*radius+r_r_gap/2+base_width/2);
+        set("x span",Lc);
+
+        copy;      #the lower coupling length for the second ring
+        set("y",-(2*radius+r_r_gap/2+base_width/2));
+
+        copy;      #the lower coupling length for the first ring
+        set("y",(r_r_gap+base_width)/2);
+
+        copy;      #the upper couopling length for the second ring
+        set("y",-(r_r_gap+base_width)/2);
+
+        addring;    #add the upper(first) ring
+        set("theta start",-90);
+        set("theta stop",90);
+        set("inner radius",radius-base_width/2);
+        set("outer radius",radius+base_width/2);
+        set("x",Lc/2);
+        set("y",radius+(r_r_gap+base_width)/2);
+
+        copy;
+        set("theta start",90);
+        set("theta stop",270);
+        set("x",-Lc/2);
+
+        addring;    #add the lower(second) ring
+        set("theta start",-90);
+        set("theta stop",90);
+        set("inner radius",radius-base_width/2);
+        set("outer radius",radius+base_width/2);
+        set("x",Lc/2);
+        set("y",-(radius+(r_r_gap+base_width)/2));
+
+        copy;
+        set("theta start",90);
+        set("theta stop",270);
+        set("x",-Lc/2);
+
+
+        selectall;
+        set("material",material);
+        if(material=="<Object defined dielectric>") {
+          set("index",index);
+        }
+        set("z min",0);
+        set("z max",height);
